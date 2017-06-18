@@ -1,4 +1,4 @@
-xThis project is a task scheduler with similar functionality to crontab.
+This project is a task scheduler with similar functionality to crontab.
 In addition, it has the following enhancement:
 - Use database to persistent task execution history and outcome for
   easy management
