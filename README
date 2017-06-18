@@ -1,0 +1,68 @@
+xThis project is a task scheduler with similar functionality to crontab.
+In addition, it has the following enhancement:
+- Use database to persistent task execution history and outcome for
+  easy management
+- Automatically track tasks with exceptions
+- Support a tree-like scheduling plan
+- Support scheduling a task at a specific timezone
+- Simulate task scheduling in a dryrun mode
+
+
+Next Steps:
+- Support TaskScheduler.py on both Postgresql database and MySQL database
+
+
+Concept:
+Task: a python function to be invoked. It is specified in the form of
+      module.func_name
+Job : an exuection of the python function. A task can corresponds to 
+      multiple jobs. For example, a user registers a task to be executed at
+      the interval of every 30 minutes between 9:00am and 12:00am. There 
+      will 6 jobs corresponding to this task.
+
+
+Use -h to see the supported options for each command:
+To start TaskScheduler:
+python TaskScheduler.py start
+
+To stop TaskScheduler:
+python TaskScheduler.py stop
+
+To add a new task:
+python TaskScheduler.py addtask
+
+To show tasks that are registered with TaskScheduler
+python TaskScheduler.py showtasks
+
+To remove a task:
+python TaskScheduler.py removetasks --id task_id
+
+To remove all tasks:
+python TaskScheduler.py removetasks --all
+
+To show job history:
+python TaskScheduler.py showhistory
+
+To show jobs to be executed:
+python TaskScheduler.py showjobs
+
+
+A quick Example:
+- tasks.py provides an example of how to implement a task. It inherits the 
+  class Task. Make sure tasks.py is on your PYTHONHOME
+
+from TaskScheduler import Task
+class Bar(Task):
+  def __init__(self):
+    super(Bar, self).__init__()
+
+  def start(self):
+    print "Bar"
+
+- Start TaskScheduler
+  python TaskScheduler.py start    
+    
+- register the task with TaskScheduler. It will be executed once at 8:00am 
+  every Sunday
+  python TaskScheduler.py addtask --name Bar --entry tasks.Bar --at 08:00 --days Sun
+
